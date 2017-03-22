@@ -7,6 +7,9 @@
 //
 
 #import "HYYXMPPManger.h"
+#import "DDLog.h"
+#import "DDTTYLogger.h"
+#import "XMPPLogging.h"
 
 static HYYXMPPManger *instance;
 
@@ -16,6 +19,8 @@ static HYYXMPPManger *instance;
 @property(nonatomic, strong)XMPPStream *xmppStream;
 // 密码
 @property(nonatomic, copy)NSString *password;
+
+
 
 @end
 
@@ -27,9 +32,18 @@ static HYYXMPPManger *instance;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         instance = [[HYYXMPPManger alloc]init];
+        [instance setupLogging];
     });
     
     return instance;
+}
+
+// 日志
+-(void)setupLogging{
+
+    // 打印连接过程
+    [DDLog addLogger:[DDTTYLogger sharedInstance] withLogLevel:XMPP_LOG_FLAG_SEND_RECV];
+
 }
 
 -(void)loginWithJID:(XMPPJID *)jid andPassword:(NSString *)password{
@@ -64,7 +78,9 @@ static HYYXMPPManger *instance;
 -(void)xmppStreamDidAuthenticate:(XMPPStream *)sender{
     
     NSLog(@"登陆成功");
-    
+    // 设置在线状态  默认在线(所有好友可见)
+    XMPPPresence *presence = [XMPPPresence presence];
+    [self.xmppStream sendElement:presence];
 }
 
 

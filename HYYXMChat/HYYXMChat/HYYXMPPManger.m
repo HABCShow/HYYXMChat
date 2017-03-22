@@ -13,7 +13,7 @@
 
 static HYYXMPPManger *instance;
 
-@interface HYYXMPPManger ()<XMPPStreamDelegate>
+@interface HYYXMPPManger ()<XMPPStreamDelegate,XMPPAutoPingDelegate>
 
 // socket抽象类
 @property(nonatomic, strong)XMPPStream *xmppStream;
@@ -21,7 +21,8 @@ static HYYXMPPManger *instance;
 @property(nonatomic, copy)NSString *password;
 // 是否登陆
 @property(nonatomic, assign, getter=isRegisterAccount)BOOL regesterAccount;
-
+// 心跳检测
+@property(nonatomic, strong)XMPPAutoPing *xmppAutoPing;
 @end
 
 
@@ -33,9 +34,27 @@ static HYYXMPPManger *instance;
     dispatch_once(&onceToken, ^{
         instance = [[HYYXMPPManger alloc]init];
         [instance setupLogging];
+//        设置模块
+        [instance setupModule];
     });
     
     return instance;
+}
+#pragma mark - 设置模块
+-(void)setupModule{
+    
+    // 创建模块  设置代理、属性  激活模块
+    // 心跳检测
+    // 响应超时时长
+    self.xmppAutoPing.pingTimeout = 5;
+    // 发送间隔
+    self.xmppAutoPing.pingInterval = 5;
+//    是否响应另一端心跳包
+    self.xmppAutoPing.respondsToQueries = YES;
+//    激活模块
+    [self.xmppAutoPing activate:self.xmppStream];
+    
+    
 }
 
 // 日志
@@ -81,6 +100,17 @@ static HYYXMPPManger *instance;
     [self connectWithJID:jid andPassword:password];
 }
 
+#pragma mark - 认证成功后调用
+-(void)xmppStreamDidAuthenticate:(XMPPStream *)sender{
+    
+    NSLog(@"登陆成功");
+    // 设置在线状态  默认在线(所有好友可见)
+    XMPPPresence *presence = [XMPPPresence presence];
+    // 设置子节点  自定义在线状态
+    [presence addChild:[DDXMLElement elementWithName:@"show" stringValue:@"dnd"]];
+    [presence addChild:[DDXMLElement elementWithName:@"status" stringValue:@"头疼~~"]];
+    [self.xmppStream sendElement:presence];
+}
 
 #pragma mark - XMPPStreamDelegate
 // 已经连接成功后调用
@@ -97,17 +127,28 @@ static HYYXMPPManger *instance;
         [self.xmppStream authenticateWithPassword:self.password error:nil];
     }
 }
-#pragma mark - 认证成功后调用
--(void)xmppStreamDidAuthenticate:(XMPPStream *)sender{
+// 连接断开
+-(void)xmppStreamDidDisconnect:(XMPPStream *)sender withError:(NSError *)error{
     
-    NSLog(@"登陆成功");
-    // 设置在线状态  默认在线(所有好友可见)
-    XMPPPresence *presence = [XMPPPresence presence];
-    // 设置子节点  自定义在线状态
-    [presence addChild:[DDXMLElement elementWithName:@"show" stringValue:@"dnd"]];
-    [presence addChild:[DDXMLElement elementWithName:@"status" stringValue:@"头疼~~"]];
-    [self.xmppStream sendElement:presence];
+    NSLog(@"连接断开");
 }
+
+
+#pragma mark - XMPPAutoPingDelegate
+// 已经发送心跳包调用
+- (void)xmppAutoPingDidSendPing:(XMPPAutoPing *)sender{
+    NSLog(@"心跳包发送");
+}
+// 已经接收到回应
+- (void)xmppAutoPingDidReceivePong:(XMPPAutoPing *)sender{
+    NSLog(@"接到响应");
+}
+// 响应超时
+- (void)xmppAutoPingDidTimeout:(XMPPAutoPing *)sender{
+    // 判断是否重写连接
+    NSLog(@"响应超时");
+}
+
 #pragma mark - 注册成功后调用
 -(void)xmppStreamDidRegister:(XMPPStream *)sender{
     
@@ -125,6 +166,13 @@ static HYYXMPPManger *instance;
     }
     return _xmppStream;
 }
-
+-(XMPPAutoPing *)xmppAutoPing{
+    if (_xmppAutoPing == nil) {
+        _xmppAutoPing = [[XMPPAutoPing alloc]initWithDispatchQueue:dispatch_get_main_queue()];
+//        设置代理，监听心跳情况
+        [_xmppAutoPing addDelegate:self delegateQueue:dispatch_get_main_queue()];
+    }
+    return _xmppAutoPing;
+}
 
 @end

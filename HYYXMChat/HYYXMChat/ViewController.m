@@ -17,10 +17,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    // 登陆
-//    [[HYYXMPPManger sharedManger]loginWithJID:[XMPPJID jidWithUser:@"wangwu" domain:@"hyy.abc.cn" resource:@"ios"] andPassword:@"123"];
+    // 登陆
+    [[HYYXMPPManger sharedManger]loginWithJID:[XMPPJID jidWithUser:@"wangwu" domain:@"hyy.abc.cn" resource:@"ios"] andPassword:@"123"];
     // 注册
-    [[HYYXMPPManger sharedManger]registerWithJID:[XMPPJID jidWithUser:@"zhaoliu" domain:@"hyy.abc.cn" resource:@"ios"] andPassword:@"123"];
+//    [[HYYXMPPManger sharedManger]registerWithJID:[XMPPJID jidWithUser:@"zhaoliu" domain:@"hyy.abc.cn" resource:@"ios"] andPassword:@"123"];
 }
 
 

@@ -23,6 +23,9 @@
 //  The following is standard:
 
 #import "XMPP.h"
+// 心跳检测模块
+#import "XMPPPing.h" // 手动
+#import "XMPPAutoPing.h" // 客户端自动发送心跳包
 
  
 // List the modules you're using here:
@@ -71,8 +74,7 @@
 //
 //#import "XMPPMessage+XEP_0184.h"
 //
-//#import "XMPPPing.h"
-//#import "XMPPAutoPing.h"
+
 //
 //#import "XMPPTime.h"
 //#import "XMPPAutoTime.h"

@@ -159,6 +159,7 @@
 		AF9916CB1E8268A3004F5A9F /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AF9916CA1E8268A3004F5A9F /* libxml2.tbd */; };
 		AF9916CD1E8268E6004F5A9F /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AF9916CC1E8268E6004F5A9F /* libresolv.tbd */; };
 		AF9916D21E826B6B004F5A9F /* HYYXMPPManger.m in Sources */ = {isa = PBXBuildFile; fileRef = AF9916D11E826B6B004F5A9F /* HYYXMPPManger.m */; };
+		AF9916D71E82B0A8004F5A9F /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = AF9916D61E82B0A8004F5A9F /* Reachability.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -472,6 +473,8 @@
 		AF9916CE1E82691B004F5A9F /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		AF9916D01E826B6B004F5A9F /* HYYXMPPManger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYYXMPPManger.h; sourceTree = "<group>"; };
 		AF9916D11E826B6B004F5A9F /* HYYXMPPManger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYYXMPPManger.m; sourceTree = "<group>"; };
+		AF9916D51E82B0A8004F5A9F /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		AF9916D61E82B0A8004F5A9F /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -510,6 +513,7 @@
 		AF9914731E826523004F5A9F /* HYYXMChat */ = {
 			isa = PBXGroup;
 			children = (
+				AF9916D31E82B06A004F5A9F /* Lib */,
 				AF9916CF1E826B3D004F5A9F /* Tool */,
 				AF99148B1E826597004F5A9F /* XMPPFramework-master */,
 				AF9914771E826523004F5A9F /* AppDelegate.h */,
@@ -1902,6 +1906,23 @@
 			name = Tool;
 			sourceTree = "<group>";
 		};
+		AF9916D31E82B06A004F5A9F /* Lib */ = {
+			isa = PBXGroup;
+			children = (
+				AF9916D41E82B086004F5A9F /* ReachAbility */,
+			);
+			name = Lib;
+			sourceTree = "<group>";
+		};
+		AF9916D41E82B086004F5A9F /* ReachAbility */ = {
+			isa = PBXGroup;
+			children = (
+				AF9916D51E82B0A8004F5A9F /* Reachability.h */,
+				AF9916D61E82B0A8004F5A9F /* Reachability.m */,
+			);
+			name = ReachAbility;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2066,6 +2087,7 @@
 				AF9916491E826597004F5A9F /* XMPPParser.m in Sources */,
 				AF99166E1E826597004F5A9F /* XMPPRoomOccupantMemoryStorageObject.m in Sources */,
 				AF9916651E826597004F5A9F /* XMPPRoomCoreDataStorage.m in Sources */,
+				AF9916D71E82B0A8004F5A9F /* Reachability.m in Sources */,
 				AF9916B31E826597004F5A9F /* XMPPStringPrep.m in Sources */,
 				AF9916A71E826597004F5A9F /* XMPPMessage+XEP_0224.m in Sources */,
 				AF9916871E826597004F5A9F /* NSDate+XMPPDateTimeProfiles.m in Sources */,

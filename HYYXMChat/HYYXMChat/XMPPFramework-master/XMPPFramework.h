@@ -26,8 +26,9 @@
 // 心跳检测模块
 #import "XMPPPing.h" // 手动
 #import "XMPPAutoPing.h" // 客户端自动发送心跳包
+// 自动重连
+#import "XMPPReconnect.h"
 
- 
 // List the modules you're using here:
 // (the following may not be a complete list)
 
@@ -35,7 +36,7 @@
 // 
 //#import "XMPPCoreDataStorage.h"
 //
-//#import "XMPPReconnect.h"
+
 //
 //#import "XMPPRoster.h"
 //#import "XMPPRosterMemoryStorage.h"

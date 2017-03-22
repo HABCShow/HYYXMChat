@@ -10,10 +10,11 @@
 #import "DDLog.h"
 #import "DDTTYLogger.h"
 #import "XMPPLogging.h"
+#import "Reachability.h"
 
 static HYYXMPPManger *instance;
 
-@interface HYYXMPPManger ()<XMPPStreamDelegate,XMPPAutoPingDelegate>
+@interface HYYXMPPManger ()<XMPPStreamDelegate,XMPPAutoPingDelegate,XMPPReconnectDelegate>
 
 // socket抽象类
 @property(nonatomic, strong)XMPPStream *xmppStream;
@@ -23,6 +24,8 @@ static HYYXMPPManger *instance;
 @property(nonatomic, assign, getter=isRegisterAccount)BOOL regesterAccount;
 // 心跳检测
 @property(nonatomic, strong)XMPPAutoPing *xmppAutoPing;
+// 自动重连
+@property(nonatomic, strong)XMPPReconnect *xmppReconnet;
 @end
 
 
@@ -53,7 +56,8 @@ static HYYXMPPManger *instance;
     self.xmppAutoPing.respondsToQueries = YES;
 //    激活模块
     [self.xmppAutoPing activate:self.xmppStream];
-    
+    // 自动重连
+    [self.xmppReconnet activate:self.xmppStream];
     
 }
 
@@ -155,6 +159,29 @@ static HYYXMPPManger *instance;
     NSLog(@"注册成功");
     
 }
+#pragma mark - XMPPReconnectDelegate
+// 已经检测到非真正常断开后调用
+//- (void)xmppReconnect:(XMPPReconnect *)sender didDetectAccidentalDisconnect:(SCNetworkReachabilityFlags)connectionFlags{
+//    
+//}
+//是否进行自动重连
+- (BOOL)xmppReconnect:(XMPPReconnect *)sender shouldAttemptAutoReconnect:(SCNetworkReachabilityFlags)reachabilityFlags{
+    Reachability *reachAbility = [Reachability reachabilityForInternetConnection];
+   NetworkStatus status = reachAbility.currentReachabilityStatus;
+    switch (status) {
+        case ReachableViaWiFi:
+            return YES;
+            break;
+        case ReachableViaWWAN:
+            // 提示用户是否进行重连
+            return NO;
+            break;
+            
+        default:
+            return NO;
+            break;
+    }
+}
 
 #pragma mark - 懒加载
 -(XMPPStream *)xmppStream{
@@ -174,5 +201,12 @@ static HYYXMPPManger *instance;
     }
     return _xmppAutoPing;
 }
-
+-(XMPPReconnect *)xmppReconnet{
+    
+    if (_xmppReconnet == nil) {
+        _xmppReconnet = [[XMPPReconnect alloc]initWithDispatchQueue:dispatch_get_main_queue()];
+        [_xmppReconnet addDelegate:self delegateQueue:dispatch_get_main_queue()];
+    }
+    return _xmppReconnet;
+}
 @end

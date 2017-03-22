@@ -158,6 +158,7 @@
 		AF9916C91E8265F8004F5A9F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF9916C81E8265F8004F5A9F /* Security.framework */; };
 		AF9916CB1E8268A3004F5A9F /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AF9916CA1E8268A3004F5A9F /* libxml2.tbd */; };
 		AF9916CD1E8268E6004F5A9F /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AF9916CC1E8268E6004F5A9F /* libresolv.tbd */; };
+		AF9916D21E826B6B004F5A9F /* HYYXMPPManger.m in Sources */ = {isa = PBXBuildFile; fileRef = AF9916D11E826B6B004F5A9F /* HYYXMPPManger.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -469,6 +470,8 @@
 		AF9916CA1E8268A3004F5A9F /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		AF9916CC1E8268E6004F5A9F /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		AF9916CE1E82691B004F5A9F /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		AF9916D01E826B6B004F5A9F /* HYYXMPPManger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYYXMPPManger.h; sourceTree = "<group>"; };
+		AF9916D11E826B6B004F5A9F /* HYYXMPPManger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYYXMPPManger.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -507,6 +510,7 @@
 		AF9914731E826523004F5A9F /* HYYXMChat */ = {
 			isa = PBXGroup;
 			children = (
+				AF9916CF1E826B3D004F5A9F /* Tool */,
 				AF99148B1E826597004F5A9F /* XMPPFramework-master */,
 				AF9914771E826523004F5A9F /* AppDelegate.h */,
 				AF9914781E826523004F5A9F /* AppDelegate.m */,
@@ -1889,6 +1893,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		AF9916CF1E826B3D004F5A9F /* Tool */ = {
+			isa = PBXGroup;
+			children = (
+				AF9916D01E826B6B004F5A9F /* HYYXMPPManger.h */,
+				AF9916D11E826B6B004F5A9F /* HYYXMPPManger.m */,
+			);
+			name = Tool;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2095,6 +2108,7 @@
 				AF99167A1E826597004F5A9F /* XMPPvCardTempBase.m in Sources */,
 				AF99163D1E826597004F5A9F /* XMPPSCRAMSHA1Authentication.m in Sources */,
 				AF9916A41E826597004F5A9F /* NSXMLElement+XEP_0203.m in Sources */,
+				AF9916D21E826B6B004F5A9F /* HYYXMPPManger.m in Sources */,
 				AF9916461E826597004F5A9F /* XMPPJID.m in Sources */,
 				AF99164D1E826597004F5A9F /* XMPPCoreDataStorage.m in Sources */,
 				AF9916A81E826597004F5A9F /* XMPPMessage+XEP_0280.m in Sources */,

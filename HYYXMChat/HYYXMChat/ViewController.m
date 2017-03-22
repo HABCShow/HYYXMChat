@@ -17,14 +17,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    // 登陆
+    [[HYYXMPPManger sharedManger]loginWithJID:[XMPPJID jidWithUser:@"wangwu" domain:@"hyy.abc.cn" resource:@"ios"] andPassword:@"123"];
 }
 
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+
 
 
 @end

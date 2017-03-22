@@ -19,8 +19,8 @@ static HYYXMPPManger *instance;
 @property(nonatomic, strong)XMPPStream *xmppStream;
 // 密码
 @property(nonatomic, copy)NSString *password;
-
-
+// 是否登陆
+@property(nonatomic, assign, getter=isRegisterAccount)BOOL regesterAccount;
 
 @end
 
@@ -45,8 +45,8 @@ static HYYXMPPManger *instance;
     [DDLog addLogger:[DDTTYLogger sharedInstance] withLogLevel:XMPP_LOG_FLAG_SEND_RECV];
 
 }
-
--(void)loginWithJID:(XMPPJID *)jid andPassword:(NSString *)password{
+#pragma mark - 连接
+-(void)connectWithJID:(XMPPJID *)jid andPassword:(NSString *)password{
     
     // 建立连接   ip+ 端口号
     /**
@@ -61,20 +61,43 @@ static HYYXMPPManger *instance;
     self.xmppStream.hostPort = 5222;
     // jid
     self.xmppStream.myJID = jid;
-   BOOL success = [self.xmppStream connectWithTimeout:-1 error:nil];
+    BOOL success = [self.xmppStream connectWithTimeout:-1 error:nil];
     if (!success) {
         NSLog(@"连接失败");
     }
 }
+#pragma mark - 登陆
+-(void)loginWithJID:(XMPPJID *)jid andPassword:(NSString *)password{
+    
+    // 建立连接   ip+ 端口号
+    [self connectWithJID:jid andPassword:password];
+}
+#pragma mark - 注册
+// 注册的方法(带内注册   长连接中注册)
+-(void)registerWithJID:(XMPPJID *)jid andPassword:(NSString *)password{
+    // 设置注册标记
+    self.regesterAccount = YES;
+   // 建立连接
+    [self connectWithJID:jid andPassword:password];
+}
+
 
 #pragma mark - XMPPStreamDelegate
 // 已经连接成功后调用
 -(void)xmppStreamDidConnect:(XMPPStream *)sender{
     NSLog(@"连接成功");
-    // 登陆 认证密码
-    [self.xmppStream authenticateWithPassword:self.password error:nil];
+    
+//    判断登陆还是注册
+    if (self.regesterAccount) {
+        // 注册
+        [self.xmppStream registerWithPassword:self.password error:nil];
+        
+    }else{
+        // 登陆 认证密码
+        [self.xmppStream authenticateWithPassword:self.password error:nil];
+    }
 }
-// 认证成功后调用
+#pragma mark - 认证成功后调用
 -(void)xmppStreamDidAuthenticate:(XMPPStream *)sender{
     
     NSLog(@"登陆成功");
@@ -85,7 +108,12 @@ static HYYXMPPManger *instance;
     [presence addChild:[DDXMLElement elementWithName:@"status" stringValue:@"头疼~~"]];
     [self.xmppStream sendElement:presence];
 }
-
+#pragma mark - 注册成功后调用
+-(void)xmppStreamDidRegister:(XMPPStream *)sender{
+    
+    NSLog(@"注册成功");
+    
+}
 
 #pragma mark - 懒加载
 -(XMPPStream *)xmppStream{

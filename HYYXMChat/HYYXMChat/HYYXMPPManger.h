@@ -11,7 +11,10 @@
 @interface HYYXMPPManger : NSObject
 
 +(instancetype)sharedManger;
-
+// 登陆的方法
 -(void)loginWithJID:(XMPPJID *)jid andPassword:(NSString *)password;
+// 注册的方法
+-(void)registerWithJID:(XMPPJID *)jid andPassword:(NSString *)password;
+
 
 @end

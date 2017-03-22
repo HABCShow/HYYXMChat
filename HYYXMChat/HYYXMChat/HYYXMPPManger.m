@@ -80,6 +80,9 @@ static HYYXMPPManger *instance;
     NSLog(@"登陆成功");
     // 设置在线状态  默认在线(所有好友可见)
     XMPPPresence *presence = [XMPPPresence presence];
+    // 设置子节点  自定义在线状态
+    [presence addChild:[DDXMLElement elementWithName:@"show" stringValue:@"dnd"]];
+    [presence addChild:[DDXMLElement elementWithName:@"status" stringValue:@"头疼~~"]];
     [self.xmppStream sendElement:presence];
 }
 

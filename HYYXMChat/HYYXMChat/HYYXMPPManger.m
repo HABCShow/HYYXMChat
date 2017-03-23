@@ -26,6 +26,9 @@ static HYYXMPPManger *instance;
 @property(nonatomic, strong)XMPPAutoPing *xmppAutoPing;
 // 自动重连
 @property(nonatomic, strong)XMPPReconnect *xmppReconnet;
+
+
+
 @end
 
 
@@ -58,7 +61,14 @@ static HYYXMPPManger *instance;
     [self.xmppAutoPing activate:self.xmppStream];
     // 自动重连
     [self.xmppReconnet activate:self.xmppStream];
-    
+    // 花名册
+    // 设置自动同步通讯录（从服务器）
+    self.xmppRoster.autoFetchRoster = YES;
+//    连接断开时，自动清理内存
+    self.xmppRoster.autoClearAllUsersAndResources = YES;
+//    设置是否自动接收订阅的请求
+    self.xmppRoster.autoAcceptKnownPresenceSubscriptionRequests = YES;
+    [self.xmppRoster activate:self.xmppStream];
 }
 
 // 日志
@@ -114,6 +124,11 @@ static HYYXMPPManger *instance;
     [presence addChild:[DDXMLElement elementWithName:@"show" stringValue:@"dnd"]];
     [presence addChild:[DDXMLElement elementWithName:@"status" stringValue:@"头疼~~"]];
     [self.xmppStream sendElement:presence];
+    // 登陆成功跳转控制器
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"root" bundle:nil];
+    [[UIApplication sharedApplication].delegate window].rootViewController = [sb instantiateInitialViewController];
+    
+    
 }
 
 #pragma mark - XMPPStreamDelegate
@@ -208,5 +223,13 @@ static HYYXMPPManger *instance;
         [_xmppReconnet addDelegate:self delegateQueue:dispatch_get_main_queue()];
     }
     return _xmppReconnet;
+}
+-(XMPPRoster *)xmppRoster{
+    
+    if (_xmppRoster == nil) {
+        _xmppRoster = [[XMPPRoster alloc]initWithRosterStorage:[XMPPRosterCoreDataStorage sharedInstance] dispatchQueue:dispatch_get_main_queue()];
+    }
+    return _xmppRoster;
+    
 }
 @end

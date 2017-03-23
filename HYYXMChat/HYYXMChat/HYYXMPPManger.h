@@ -10,6 +10,9 @@
 
 @interface HYYXMPPManger : NSObject
 
+// 通讯录模块
+@property(nonatomic, strong)XMPPRoster *xmppRoster;
+
 +(instancetype)sharedManger;
 // 登陆的方法
 -(void)loginWithJID:(XMPPJID *)jid andPassword:(NSString *)password;

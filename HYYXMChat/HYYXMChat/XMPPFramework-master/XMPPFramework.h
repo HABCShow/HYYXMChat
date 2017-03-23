@@ -29,6 +29,11 @@
 // 自动重连
 #import "XMPPReconnect.h"
 
+// 通讯录模块类
+#import "XMPPRoster.h" //花名册
+#import "XMPPRosterMemoryStorage.h" // 通讯录内存存储器
+#import "XMPPRosterCoreDataStorage.h" // 磁盘缓存
+
 // List the modules you're using here:
 // (the following may not be a complete list)
 
@@ -38,9 +43,7 @@
 //
 
 //
-//#import "XMPPRoster.h"
-//#import "XMPPRosterMemoryStorage.h"
-//#import "XMPPRosterCoreDataStorage.h"
+
 //
 //#import "XMPPJabberRPCModule.h"
 //#import "XMPPIQ+JabberRPC.h"

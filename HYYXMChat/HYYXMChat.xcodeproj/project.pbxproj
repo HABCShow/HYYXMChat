@@ -160,6 +160,8 @@
 		AF9916CD1E8268E6004F5A9F /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AF9916CC1E8268E6004F5A9F /* libresolv.tbd */; };
 		AF9916D21E826B6B004F5A9F /* HYYXMPPManger.m in Sources */ = {isa = PBXBuildFile; fileRef = AF9916D11E826B6B004F5A9F /* HYYXMPPManger.m */; };
 		AF9916D71E82B0A8004F5A9F /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = AF9916D61E82B0A8004F5A9F /* Reachability.m */; };
+		AF9916DC1E839AF5004F5A9F /* root.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AF9916DB1E839AF5004F5A9F /* root.storyboard */; };
+		AF9916E11E83A2A1004F5A9F /* HYYContactTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF9916E01E83A2A1004F5A9F /* HYYContactTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -475,6 +477,9 @@
 		AF9916D11E826B6B004F5A9F /* HYYXMPPManger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYYXMPPManger.m; sourceTree = "<group>"; };
 		AF9916D51E82B0A8004F5A9F /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		AF9916D61E82B0A8004F5A9F /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		AF9916DB1E839AF5004F5A9F /* root.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = root.storyboard; sourceTree = "<group>"; };
+		AF9916DF1E83A2A1004F5A9F /* HYYContactTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYYContactTableViewController.h; sourceTree = "<group>"; };
+		AF9916E01E83A2A1004F5A9F /* HYYContactTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYYContactTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -513,14 +518,12 @@
 		AF9914731E826523004F5A9F /* HYYXMChat */ = {
 			isa = PBXGroup;
 			children = (
+				AF9916D81E839A8B004F5A9F /* Controller */,
 				AF9916D31E82B06A004F5A9F /* Lib */,
 				AF9916CF1E826B3D004F5A9F /* Tool */,
 				AF99148B1E826597004F5A9F /* XMPPFramework-master */,
 				AF9914771E826523004F5A9F /* AppDelegate.h */,
 				AF9914781E826523004F5A9F /* AppDelegate.m */,
-				AF99147A1E826523004F5A9F /* ViewController.h */,
-				AF99147B1E826523004F5A9F /* ViewController.m */,
-				AF99147D1E826523004F5A9F /* Main.storyboard */,
 				AF9914801E826523004F5A9F /* Assets.xcassets */,
 				AF9914821E826523004F5A9F /* LaunchScreen.storyboard */,
 				AF9914851E826523004F5A9F /* Info.plist */,
@@ -1923,6 +1926,43 @@
 			name = ReachAbility;
 			sourceTree = "<group>";
 		};
+		AF9916D81E839A8B004F5A9F /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				AF9916DA1E839AD4004F5A9F /* Root */,
+				AF9916D91E839AA3004F5A9F /* Login(登陆) */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		AF9916D91E839AA3004F5A9F /* Login(登陆) */ = {
+			isa = PBXGroup;
+			children = (
+				AF99147A1E826523004F5A9F /* ViewController.h */,
+				AF99147B1E826523004F5A9F /* ViewController.m */,
+				AF99147D1E826523004F5A9F /* Main.storyboard */,
+			);
+			name = "Login(登陆)";
+			sourceTree = "<group>";
+		};
+		AF9916DA1E839AD4004F5A9F /* Root */ = {
+			isa = PBXGroup;
+			children = (
+				AF9916DD1E83A255004F5A9F /* contact */,
+				AF9916DB1E839AF5004F5A9F /* root.storyboard */,
+			);
+			name = Root;
+			sourceTree = "<group>";
+		};
+		AF9916DD1E83A255004F5A9F /* contact */ = {
+			isa = PBXGroup;
+			children = (
+				AF9916DF1E83A2A1004F5A9F /* HYYContactTableViewController.h */,
+				AF9916E01E83A2A1004F5A9F /* HYYContactTableViewController.m */,
+			);
+			name = contact;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1985,6 +2025,7 @@
 				AF9914841E826523004F5A9F /* LaunchScreen.storyboard in Resources */,
 				AF9914811E826523004F5A9F /* Assets.xcassets in Resources */,
 				AF9916BE1E826597004F5A9F /* README.txt in Resources */,
+				AF9916DC1E839AF5004F5A9F /* root.storyboard in Resources */,
 				AF99147F1E826523004F5A9F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2115,6 +2156,7 @@
 				AF9916541E826597004F5A9F /* XMPPGroupCoreDataStorageObject.m in Sources */,
 				AF9916771E826597004F5A9F /* XMPPvCardTemp.m in Sources */,
 				AF9916511E826597004F5A9F /* XMPPGoogleSharedStatus.m in Sources */,
+				AF9916E11E83A2A1004F5A9F /* HYYContactTableViewController.m in Sources */,
 				AF9916551E826597004F5A9F /* XMPPResourceCoreDataStorageObject.m in Sources */,
 				AF9916B41E826597004F5A9F /* XMPPTimer.m in Sources */,
 				AF9916381E826597004F5A9F /* XMPPAnonymousAuthentication.m in Sources */,

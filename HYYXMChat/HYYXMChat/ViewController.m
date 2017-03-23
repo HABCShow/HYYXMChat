@@ -17,6 +17,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSLog(@"%@",NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject);
     // 登陆
     [[HYYXMPPManger sharedManger]loginWithJID:[XMPPJID jidWithUser:@"wangwu" domain:@"hyy.abc.cn" resource:@"ios"] andPassword:@"123"];
     // 注册

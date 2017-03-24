@@ -14,7 +14,7 @@
 
 static HYYXMPPManger *instance;
 
-@interface HYYXMPPManger ()<XMPPStreamDelegate,XMPPAutoPingDelegate,XMPPReconnectDelegate,XMPPRosterDelegate>
+@interface HYYXMPPManger ()<XMPPStreamDelegate,XMPPAutoPingDelegate,XMPPReconnectDelegate,XMPPRosterDelegate,NSFetchedResultsControllerDelegate>
 
 // socket抽象类
 @property(nonatomic, strong)XMPPStream *xmppStream;
@@ -26,7 +26,8 @@ static HYYXMPPManger *instance;
 @property(nonatomic, strong)XMPPAutoPing *xmppAutoPing;
 // 自动重连
 @property(nonatomic, strong)XMPPReconnect *xmppReconnet;
-
+// 查询结果控制器
+@property(nonatomic, strong)NSFetchedResultsController *rosterFetchController;
 
 
 @end
@@ -99,6 +100,21 @@ static HYYXMPPManger *instance;
         NSLog(@"连接失败");
     }
 }
+
+#pragma mark - 刷新通讯录
+
+-(NSArray <XMPPUserCoreDataStorageObject *>*)relodContactList{
+    // 执行查询
+  BOOL success = [self.rosterFetchController performFetch:nil];
+    if (success) {
+        return self.rosterFetchController.fetchedObjects;
+    }else{
+        NSLog(@"查询失败");
+        return nil;
+    }
+    
+}
+
 #pragma mark - 登陆
 -(void)loginWithJID:(XMPPJID *)jid andPassword:(NSString *)password{
     
@@ -236,7 +252,14 @@ static HYYXMPPManger *instance;
     }
     
 }
-
+#pragma mark - NSFetchedResultsControllerDelegate
+// 结果集发生变化调用
+-(void)controllerDidChangeContent:(NSFetchedResultsController *)controller{
+    // 发送通知
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"XMPPRosterDidChangedNote" object:nil];
+    
+    
+}
 
 #pragma mark - 懒加载
 -(XMPPStream *)xmppStream{
@@ -272,5 +295,23 @@ static HYYXMPPManger *instance;
     }
     return _xmppRoster;
     
+}
+-(NSFetchedResultsController *)rosterFetchController{
+    
+    if (_rosterFetchController == nil) {
+        
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"XMPPUserCoreDataStorageObject" inManagedObjectContext:[XMPPRosterCoreDataStorage sharedInstance].mainThreadManagedObjectContext];
+        [fetchRequest setEntity:entity];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"subscription = 'both'"];
+        [fetchRequest setPredicate:predicate];
+        // Specify how the fetched objects should be sorted
+        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"jidStr"
+                                                                       ascending:YES];
+        [fetchRequest setSortDescriptors:[NSArray arrayWithObjects:sortDescriptor, nil]];
+        _rosterFetchController = [[NSFetchedResultsController alloc]initWithFetchRequest:fetchRequest managedObjectContext:[XMPPRosterCoreDataStorage sharedInstance].mainThreadManagedObjectContext sectionNameKeyPath:nil cacheName:nil];
+        _rosterFetchController.delegate = self;
+    }
+    return _rosterFetchController;
 }
 @end

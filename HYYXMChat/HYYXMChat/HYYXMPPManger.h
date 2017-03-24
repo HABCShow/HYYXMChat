@@ -18,6 +18,7 @@
 -(void)loginWithJID:(XMPPJID *)jid andPassword:(NSString *)password;
 // 注册的方法
 -(void)registerWithJID:(XMPPJID *)jid andPassword:(NSString *)password;
-
+// 刷新通讯录
+-(NSArray <XMPPUserCoreDataStorageObject *>*)relodContactList;
 
 @end

@@ -14,7 +14,7 @@
 
 static HYYXMPPManger *instance;
 
-@interface HYYXMPPManger ()<XMPPStreamDelegate,XMPPAutoPingDelegate,XMPPReconnectDelegate>
+@interface HYYXMPPManger ()<XMPPStreamDelegate,XMPPAutoPingDelegate,XMPPReconnectDelegate,XMPPRosterDelegate>
 
 // socket抽象类
 @property(nonatomic, strong)XMPPStream *xmppStream;
@@ -67,7 +67,7 @@ static HYYXMPPManger *instance;
 //    连接断开时，自动清理内存
     self.xmppRoster.autoClearAllUsersAndResources = YES;
 //    设置是否自动接收订阅的请求
-    self.xmppRoster.autoAcceptKnownPresenceSubscriptionRequests = YES;
+    self.xmppRoster.autoAcceptKnownPresenceSubscriptionRequests = NO;
     [self.xmppRoster activate:self.xmppStream];
 }
 
@@ -117,7 +117,7 @@ static HYYXMPPManger *instance;
 #pragma mark - 认证成功后调用
 -(void)xmppStreamDidAuthenticate:(XMPPStream *)sender{
     
-    NSLog(@"登陆成功");
+    NSLog(@"-------------登陆成功");
     // 设置在线状态  默认在线(所有好友可见)
     XMPPPresence *presence = [XMPPPresence presence];
     // 设置子节点  自定义在线状态
@@ -198,6 +198,46 @@ static HYYXMPPManger *instance;
     }
 }
 
+#pragma mark - XMPPRosterDelegate
+// 如果没有自动接收订阅，则会调用该方法
+-(void)xmppRoster:(XMPPRoster *)sender didReceivePresenceSubscriptionRequest:(XMPPPresence *)presence{
+//   判断我加别人还是别人加我
+//    我加别人  客户端会保存添加记录
+//需要根据user表中 ask字段来判断  我加别人字段为subscrib
+    // 进行coredata查询
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"XMPPUserCoreDataStorageObject" inManagedObjectContext:[XMPPRosterCoreDataStorage sharedInstance].mainThreadManagedObjectContext];
+    [fetchRequest setEntity:entity];
+    // 谓词
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"jidStr = %@", presence.from];
+    [fetchRequest setPredicate:predicate];
+    NSArray *fetchedObjects = [[XMPPRosterCoreDataStorage sharedInstance].mainThreadManagedObjectContext executeFetchRequest:fetchRequest error:nil];
+    XMPPUserCoreDataStorageObject *contact = fetchedObjects.lastObject;
+    if ([contact.subscription isEqualToString:@"to"]) {
+        // 我加别人  接收订阅请求
+        [self.xmppRoster acceptPresenceSubscriptionRequestFrom:presence.from andAddToRoster:YES];
+           UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"好友通知" message:[NSString stringWithFormat:@"%@已经成为你的好友",presence.from.user] preferredStyle:UIAlertControllerStyleAlert];
+        [[[UIApplication sharedApplication].delegate window].rootViewController presentViewController:alert animated:YES completion:nil];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [alert dismissViewControllerAnimated:YES completion:nil];
+        });
+    }else{
+        // 别人加我
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"好友通知" message:[NSString stringWithFormat:@"%@想要添加您为好友",presence.from.user] preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"同意" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [self.xmppRoster acceptPresenceSubscriptionRequestFrom:presence.from andAddToRoster:YES];
+        }];
+        UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"拒绝" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [self.xmppRoster rejectPresenceSubscriptionRequestFrom:presence.from];
+        }];
+        [alert addAction:action1];
+        [alert addAction:action2];
+        [[[UIApplication sharedApplication].delegate window].rootViewController presentViewController:alert animated:YES completion:nil];
+    }
+    
+}
+
+
 #pragma mark - 懒加载
 -(XMPPStream *)xmppStream{
     
@@ -228,6 +268,7 @@ static HYYXMPPManger *instance;
     
     if (_xmppRoster == nil) {
         _xmppRoster = [[XMPPRoster alloc]initWithRosterStorage:[XMPPRosterCoreDataStorage sharedInstance] dispatchQueue:dispatch_get_main_queue()];
+        [ _xmppRoster addDelegate:self delegateQueue:dispatch_get_main_queue()];
     }
     return _xmppRoster;
     

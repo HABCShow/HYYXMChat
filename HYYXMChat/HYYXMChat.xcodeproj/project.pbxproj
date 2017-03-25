@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AF4162311E8611CB00FBDBD8 /* HYYChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF4162301E8611CB00FBDBD8 /* HYYChatViewController.m */; };
+		AF4162351E86754B00FBDBD8 /* HYYRecentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF4162341E86754B00FBDBD8 /* HYYRecentViewController.m */; };
 		AF9914761E826523004F5A9F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AF9914751E826523004F5A9F /* main.m */; };
 		AF9914791E826523004F5A9F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AF9914781E826523004F5A9F /* AppDelegate.m */; };
 		AF99147C1E826523004F5A9F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF99147B1E826523004F5A9F /* ViewController.m */; };
@@ -168,6 +169,8 @@
 /* Begin PBXFileReference section */
 		AF41622F1E8611CB00FBDBD8 /* HYYChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYYChatViewController.h; sourceTree = "<group>"; };
 		AF4162301E8611CB00FBDBD8 /* HYYChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYYChatViewController.m; sourceTree = "<group>"; };
+		AF4162331E86754B00FBDBD8 /* HYYRecentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYYRecentViewController.h; sourceTree = "<group>"; };
+		AF4162341E86754B00FBDBD8 /* HYYRecentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYYRecentViewController.m; sourceTree = "<group>"; };
 		AF9914711E826523004F5A9F /* HYYXMChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HYYXMChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF9914751E826523004F5A9F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		AF9914771E826523004F5A9F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -508,6 +511,15 @@
 				AF4162301E8611CB00FBDBD8 /* HYYChatViewController.m */,
 			);
 			name = chat;
+			sourceTree = "<group>";
+		};
+		AF4162321E86752F00FBDBD8 /* recent */ = {
+			isa = PBXGroup;
+			children = (
+				AF4162331E86754B00FBDBD8 /* HYYRecentViewController.h */,
+				AF4162341E86754B00FBDBD8 /* HYYRecentViewController.m */,
+			);
+			name = recent;
 			sourceTree = "<group>";
 		};
 		AF9914681E826523004F5A9F = {
@@ -1960,6 +1972,7 @@
 		AF9916DA1E839AD4004F5A9F /* Root */ = {
 			isa = PBXGroup;
 			children = (
+				AF4162321E86752F00FBDBD8 /* recent */,
 				AF41622E1E8611B500FBDBD8 /* chat */,
 				AF9916DD1E83A255004F5A9F /* contact */,
 				AF9916DB1E839AF5004F5A9F /* root.storyboard */,
@@ -2184,6 +2197,7 @@
 				AF99169C1E826597004F5A9F /* XMPPBlocking.m in Sources */,
 				AF99167B1E826597004F5A9F /* XMPPvCardTempEmail.m in Sources */,
 				AF99167A1E826597004F5A9F /* XMPPvCardTempBase.m in Sources */,
+				AF4162351E86754B00FBDBD8 /* HYYRecentViewController.m in Sources */,
 				AF99163D1E826597004F5A9F /* XMPPSCRAMSHA1Authentication.m in Sources */,
 				AF9916A41E826597004F5A9F /* NSXMLElement+XEP_0203.m in Sources */,
 				AF9916D21E826B6B004F5A9F /* HYYXMPPManger.m in Sources */,

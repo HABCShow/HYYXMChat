@@ -7,6 +7,7 @@
 //
 
 #import "HYYContactTableViewController.h"
+#import "HYYChatViewController.h"
 
 @interface HYYContactTableViewController ()
 
@@ -37,6 +38,15 @@
 
     [[HYYXMPPManger sharedManger].xmppRoster addUser:[XMPPJID jidWithUser:@"lisi" domain:@"hyy.abc.cn" resource:nil] withNickname:@"李四"];
 }
+// 将jid传递给聊天chat界面
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    HYYChatViewController *chatVC = segue.destinationViewController;
+    // 选中行
+  NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+    chatVC.contactJid = self.contactList[indexPath.row].jid;
+    
+}
+
 
 #pragma mark - Table view data source
 

@@ -9,7 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @interface HYYXMPPManger : NSObject
-
+// socket抽象类
+@property(nonatomic, strong)XMPPStream *xmppStream;
 // 通讯录模块
 @property(nonatomic, strong)XMPPRoster *xmppRoster;
 

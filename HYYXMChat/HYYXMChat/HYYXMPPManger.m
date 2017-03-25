@@ -16,8 +16,7 @@ static HYYXMPPManger *instance;
 
 @interface HYYXMPPManger ()<XMPPStreamDelegate,XMPPAutoPingDelegate,XMPPReconnectDelegate,XMPPRosterDelegate,NSFetchedResultsControllerDelegate>
 
-// socket抽象类
-@property(nonatomic, strong)XMPPStream *xmppStream;
+
 // 密码
 @property(nonatomic, copy)NSString *password;
 // 是否登陆
@@ -28,6 +27,8 @@ static HYYXMPPManger *instance;
 @property(nonatomic, strong)XMPPReconnect *xmppReconnet;
 // 查询结果控制器
 @property(nonatomic, strong)NSFetchedResultsController *rosterFetchController;
+//文件归档模块
+@property(nonatomic, strong)XMPPMessageArchiving *xmppMessageArchiving;
 
 
 @end
@@ -70,6 +71,10 @@ static HYYXMPPManger *instance;
 //    设置是否自动接收订阅的请求
     self.xmppRoster.autoAcceptKnownPresenceSubscriptionRequests = NO;
     [self.xmppRoster activate:self.xmppStream];
+    // 消息归档模块
+     //是否只归档客户端的消息(即使设置为NO,也要求客户端完整实现0136协议才可以实现离线消息同步)
+    self.xmppMessageArchiving.clientSideMessageArchivingOnly = YES;
+    [self.xmppMessageArchiving activate:self.xmppStream];
 }
 
 // 日志
@@ -314,4 +319,13 @@ static HYYXMPPManger *instance;
     }
     return _rosterFetchController;
 }
+
+-(XMPPMessageArchiving *)xmppMessageArchiving{
+    
+    if (_xmppMessageArchiving == nil) {
+        _xmppMessageArchiving = [[XMPPMessageArchiving alloc]initWithMessageArchivingStorage:[XMPPMessageArchivingCoreDataStorage sharedInstance] dispatchQueue:dispatch_get_main_queue()];
+    }
+    return _xmppMessageArchiving;
+}
+
 @end

@@ -11,8 +11,12 @@
 static NSString *recvCell = @"recvCell";
 static NSString *sendCell = @"sendCell";
 
-@interface HYYChatViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface HYYChatViewController ()<UITableViewDelegate,UITableViewDataSource,NSFetchedResultsControllerDelegate,UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+// 查询结果控制器
+@property(nonatomic, strong)NSFetchedResultsController *fetchVC;
+// 归档消息数组
+@property(nonatomic, strong)NSArray <XMPPMessageArchiving_Message_CoreDataObject *>*archivingMessage;
 
 @end
 
@@ -23,36 +27,88 @@ static NSString *sendCell = @"sendCell";
     
     self.tableView.estimatedRowHeight = 200;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
+    [self reloadData];
+}
+// 刷新数据
+-(void)reloadData{
+    
+   BOOL success = [self.fetchVC performFetch:nil];
+    if (success) {
+        self.archivingMessage = self.fetchVC.fetchedObjects;
+        [self.tableView reloadData];
+        
+        if (self.archivingMessage.count > 0) {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                
+                [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.archivingMessage.count - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+            });
+            
+        }
+        
+    }
+    
+}
+#pragma mark - UITextFieldDelegate
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    
+    XMPPMessage *message = [XMPPMessage messageWithType:@"chat" to:self.contactJid];
+    [message addBody:textField.text];
+    [[HYYXMPPManger sharedManger].xmppStream sendElement:message];
+    textField.text = nil;
+    return YES;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return 3;
+    return self.archivingMessage.count;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     UITableViewCell *cell;
-    if (indexPath.row % 2) {
-        cell = [tableView dequeueReusableCellWithIdentifier:recvCell forIndexPath:indexPath];
-    }else{
-        
+    XMPPMessageArchiving_Message_CoreDataObject *messageObj = self.archivingMessage[indexPath.row];
+    if (messageObj.isOutgoing) {
+        // 发出消息
         cell = [tableView dequeueReusableCellWithIdentifier:sendCell forIndexPath:indexPath];
+        
+    }else{
+        // 接收消息
+        cell = [tableView dequeueReusableCellWithIdentifier:recvCell forIndexPath:indexPath];
     }
     UILabel *label = [cell viewWithTag:1002];
-    label.text = @"撒大家就快来撒地方煤矿了健康快乐防守打法撒个防空火箭好的撒建行卡，按时发大水，弗兰克稳健考虑为巨额罚款麻烦开始了你就是对方能接受对方能接受咖啡你发送到";
+    label.text = messageObj.message.body;
     
     return cell;
     
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+#pragma mark - NSFetchedResultsControllerDelegate
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller{
+    
+    // 刷新数据
+    [self reloadData];
 }
-*/
+
+
+#pragma mark - 懒加载
+-(NSFetchedResultsController *)fetchVC{
+    
+    if (_fetchVC == nil) {
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"XMPPMessageArchiving_Message_CoreDataObject" inManagedObjectContext:[XMPPMessageArchivingCoreDataStorage sharedInstance].mainThreadManagedObjectContext];
+        [fetchRequest setEntity:entity];
+        // Specify criteria for filtering which objects to fetch
+        // 设置谓词  取出和当前联系人聊的记录
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"bareJidStr = %@", self.contactJid.bare];
+        [fetchRequest setPredicate:predicate];
+        // Specify how the fetched objects should be sorted
+        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp"
+                                                                    ascending:YES];
+        [fetchRequest setSortDescriptors:[NSArray arrayWithObjects:sortDescriptor, nil]];
+        _fetchVC = [[NSFetchedResultsController alloc]initWithFetchRequest:fetchRequest managedObjectContext:[XMPPMessageArchivingCoreDataStorage sharedInstance].mainThreadManagedObjectContext sectionNameKeyPath:nil cacheName:nil];
+        _fetchVC.delegate = self;
+    }
+    return _fetchVC;
+}
+
 
 @end

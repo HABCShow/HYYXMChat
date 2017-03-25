@@ -39,6 +39,13 @@
 #import "XMPPMessageArchiving.h"
 #import "XMPPMessageArchivingCoreDataStorage.h" //消息归档磁盘存储器
 
+//头像模块
+#import "XMPPvCardAvatarModule.h"
+//电子名片模块缓存
+#import "XMPPvCardTempModule.h"
+#import "XMPPvCardCoreDataStorage.h"
+
+
 
 // List the modules you're using here:
 // (the following may not be a complete list)
@@ -63,8 +70,7 @@
 //#import "XMPPRoomCoreDataStorage.h"
 //#import "XMPPRoomHybridStorage.h"
 //
-//#import "XMPPvCardTempModule.h"
-//#import "XMPPvCardCoreDataStorage.h"
+
 //
 //#import "XMPPPubSub.h"
 //
@@ -80,7 +86,6 @@
 //#import "XMPPCapabilities.h"
 //#import "XMPPCapabilitiesCoreDataStorage.h"
 //
-//#import "XMPPvCardAvatarModule.h"
 //
 //#import "XMPPMessage+XEP_0184.h"
 //

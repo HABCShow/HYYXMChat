@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		AF4162311E8611CB00FBDBD8 /* HYYChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF4162301E8611CB00FBDBD8 /* HYYChatViewController.m */; };
 		AF4162351E86754B00FBDBD8 /* HYYRecentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF4162341E86754B00FBDBD8 /* HYYRecentViewController.m */; };
+		AF4162391E868A8000FBDBD8 /* HYYMeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF4162381E868A8000FBDBD8 /* HYYMeTableViewController.m */; };
+		AF41623F1E868FD500FBDBD8 /* HYYDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF41623E1E868FD500FBDBD8 /* HYYDetailTableViewController.m */; };
+		AF4162421E868FF300FBDBD8 /* HYYEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF4162411E868FF300FBDBD8 /* HYYEditViewController.m */; };
 		AF9914761E826523004F5A9F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AF9914751E826523004F5A9F /* main.m */; };
 		AF9914791E826523004F5A9F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AF9914781E826523004F5A9F /* AppDelegate.m */; };
 		AF99147C1E826523004F5A9F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF99147B1E826523004F5A9F /* ViewController.m */; };
@@ -171,6 +174,12 @@
 		AF4162301E8611CB00FBDBD8 /* HYYChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYYChatViewController.m; sourceTree = "<group>"; };
 		AF4162331E86754B00FBDBD8 /* HYYRecentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYYRecentViewController.h; sourceTree = "<group>"; };
 		AF4162341E86754B00FBDBD8 /* HYYRecentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYYRecentViewController.m; sourceTree = "<group>"; };
+		AF4162371E868A8000FBDBD8 /* HYYMeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYYMeTableViewController.h; sourceTree = "<group>"; };
+		AF4162381E868A8000FBDBD8 /* HYYMeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYYMeTableViewController.m; sourceTree = "<group>"; };
+		AF41623D1E868FD500FBDBD8 /* HYYDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYYDetailTableViewController.h; sourceTree = "<group>"; };
+		AF41623E1E868FD500FBDBD8 /* HYYDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYYDetailTableViewController.m; sourceTree = "<group>"; };
+		AF4162401E868FF300FBDBD8 /* HYYEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYYEditViewController.h; sourceTree = "<group>"; };
+		AF4162411E868FF300FBDBD8 /* HYYEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYYEditViewController.m; sourceTree = "<group>"; };
 		AF9914711E826523004F5A9F /* HYYXMChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HYYXMChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF9914751E826523004F5A9F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		AF9914771E826523004F5A9F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -520,6 +529,35 @@
 				AF4162341E86754B00FBDBD8 /* HYYRecentViewController.m */,
 			);
 			name = recent;
+			sourceTree = "<group>";
+		};
+		AF4162361E868A6D00FBDBD8 /* me */ = {
+			isa = PBXGroup;
+			children = (
+				AF41623B1E868FA200FBDBD8 /* detail */,
+				AF41623A1E868F8A00FBDBD8 /* edit */,
+				AF4162371E868A8000FBDBD8 /* HYYMeTableViewController.h */,
+				AF4162381E868A8000FBDBD8 /* HYYMeTableViewController.m */,
+			);
+			name = me;
+			sourceTree = "<group>";
+		};
+		AF41623A1E868F8A00FBDBD8 /* edit */ = {
+			isa = PBXGroup;
+			children = (
+				AF4162401E868FF300FBDBD8 /* HYYEditViewController.h */,
+				AF4162411E868FF300FBDBD8 /* HYYEditViewController.m */,
+			);
+			name = edit;
+			sourceTree = "<group>";
+		};
+		AF41623B1E868FA200FBDBD8 /* detail */ = {
+			isa = PBXGroup;
+			children = (
+				AF41623D1E868FD500FBDBD8 /* HYYDetailTableViewController.h */,
+				AF41623E1E868FD500FBDBD8 /* HYYDetailTableViewController.m */,
+			);
+			name = detail;
 			sourceTree = "<group>";
 		};
 		AF9914681E826523004F5A9F = {
@@ -1972,6 +2010,7 @@
 		AF9916DA1E839AD4004F5A9F /* Root */ = {
 			isa = PBXGroup;
 			children = (
+				AF4162361E868A6D00FBDBD8 /* me */,
 				AF4162321E86752F00FBDBD8 /* recent */,
 				AF41622E1E8611B500FBDBD8 /* chat */,
 				AF9916DD1E83A255004F5A9F /* contact */,
@@ -2104,6 +2143,7 @@
 				AF99163F1E826597004F5A9F /* XMPPXOAuth2Google.m in Sources */,
 				AF9916391E826597004F5A9F /* XMPPDeprecatedDigestAuthentication.m in Sources */,
 				AF9916A51E826597004F5A9F /* XEP_0223.m in Sources */,
+				AF4162391E868A8000FBDBD8 /* HYYMeTableViewController.m in Sources */,
 				AF9916A01E826597004F5A9F /* XMPPAutoPing.m in Sources */,
 				AF99164E1E826597004F5A9F /* XMPPFileTransfer.m in Sources */,
 				AF9916B01E826597004F5A9F /* RFImageToDataTransformer.m in Sources */,
@@ -2191,6 +2231,7 @@
 				AF9916AF1E826597004F5A9F /* GCDMulticastDelegate.m in Sources */,
 				AF9916961E826597004F5A9F /* XMPPMessageArchiving.m in Sources */,
 				AF99169F1E826597004F5A9F /* XMPPStreamManagement.m in Sources */,
+				AF41623F1E868FD500FBDBD8 /* HYYDetailTableViewController.m in Sources */,
 				AF9916BA1E826597004F5A9F /* DDTTYLogger.m in Sources */,
 				AF9916501E826597004F5A9F /* XMPPOutgoingFileTransfer.m in Sources */,
 				AF9916AC1E826597004F5A9F /* XMPPMessage+XEP_0333.m in Sources */,
@@ -2206,6 +2247,7 @@
 				AF9916A81E826597004F5A9F /* XMPPMessage+XEP_0280.m in Sources */,
 				AF99168B1E826597004F5A9F /* XMPPTransports.m in Sources */,
 				AF9916A91E826597004F5A9F /* XMPPMessageCarbons.m in Sources */,
+				AF4162421E868FF300FBDBD8 /* HYYEditViewController.m in Sources */,
 				AF9916BF1E826597004F5A9F /* NSString+DDXML.m in Sources */,
 				AF99165B1E826597004F5A9F /* XMPPUserMemoryStorageObject.m in Sources */,
 				AF9914761E826523004F5A9F /* main.m in Sources */,

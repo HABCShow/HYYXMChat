@@ -29,7 +29,10 @@ static HYYXMPPManger *instance;
 @property(nonatomic, strong)NSFetchedResultsController *rosterFetchController;
 //文件归档模块
 @property(nonatomic, strong)XMPPMessageArchiving *xmppMessageArchiving;
-
+//电子名片
+@property(nonatomic, strong)XMPPvCardTempModule *xmppVCardTemp;
+//头像模块
+@property(nonatomic, strong)XMPPvCardAvatarModule *xmppVCardAvatar;
 
 @end
 
@@ -326,6 +329,20 @@ static HYYXMPPManger *instance;
         _xmppMessageArchiving = [[XMPPMessageArchiving alloc]initWithMessageArchivingStorage:[XMPPMessageArchivingCoreDataStorage sharedInstance] dispatchQueue:dispatch_get_main_queue()];
     }
     return _xmppMessageArchiving;
+}
+-(XMPPvCardTempModule *)xmppVCardTemp{
+    
+    if (_xmppVCardTemp == nil) {
+        _xmppVCardTemp = [[XMPPvCardTempModule alloc]initWithvCardStorage:[XMPPvCardCoreDataStorage sharedInstance] dispatchQueue:dispatch_get_main_queue()];
+    }
+    return _xmppVCardTemp;
+}
+-(XMPPvCardAvatarModule *)xmppVCardAvatar{
+    
+    if (_xmppVCardAvatar == nil) {
+        _xmppVCardAvatar = [[XMPPvCardAvatarModule alloc]initWithvCardTempModule:self.xmppVCardTemp dispatchQueue:dispatch_get_main_queue()];
+    }
+    return _xmppVCardAvatar;
 }
 
 @end

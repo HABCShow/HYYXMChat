@@ -73,7 +73,8 @@
     nameLabel.text = self.recentList[indexPath.row].bareJid.user;
     UILabel *mesLabel = [cell viewWithTag:1003];
     mesLabel.text = self.recentList[indexPath.row].mostRecentMessageBody;
-    
+    UIImageView *img = [cell viewWithTag:1001];
+    img.image = [UIImage imageWithData:[[HYYXMPPManger sharedManger].xmppVCardAvatar photoDataForJID:self.recentList[indexPath.row].bareJid]];
     return cell;
 }
 

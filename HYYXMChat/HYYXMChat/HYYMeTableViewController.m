@@ -22,9 +22,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-
+   
 }
-
+-(void)viewWillAppear:(BOOL)animated{
+    
+    [super viewWillAppear:animated];
+    XMPPvCardTemp* myVCard = [HYYXMPPManger sharedManger].xmppVCardTemp.myvCardTemp;
+    self.imgView.image = [UIImage imageWithData:myVCard.photo];
+    self.nameLabel.text = myVCard.nickname;
+    self.descLabel.text = myVCard.desc;
+    
+}
 
 
 

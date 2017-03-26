@@ -69,10 +69,13 @@ static NSString *sendCell = @"sendCell";
     if (messageObj.isOutgoing) {
         // 发出消息
         cell = [tableView dequeueReusableCellWithIdentifier:sendCell forIndexPath:indexPath];
-        
+        UIImageView *img = [cell viewWithTag:1001];
+        img.image = [UIImage imageWithData:[HYYXMPPManger sharedManger].xmppVCardTemp.myvCardTemp.photo];
     }else{
         // 接收消息
         cell = [tableView dequeueReusableCellWithIdentifier:recvCell forIndexPath:indexPath];
+        UIImageView *img = [cell viewWithTag:1001];
+        img.image = [UIImage imageWithData:[[HYYXMPPManger sharedManger].xmppVCardAvatar photoDataForJID:self.contactJid]];
     }
     UILabel *label = [cell viewWithTag:1002];
     label.text = messageObj.message.body;

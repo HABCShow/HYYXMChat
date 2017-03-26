@@ -61,7 +61,8 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"contact" forIndexPath:indexPath];
     UILabel *label = [cell viewWithTag:1002];
     label.text = self.contactList[indexPath.row].jid.user;
-    
+    UIImageView *img = [cell viewWithTag:1001];
+    img.image = [UIImage imageWithData:[[HYYXMPPManger sharedManger].xmppVCardAvatar photoDataForJID:self.contactList[indexPath.row].jid]];
     return cell;
 }
 

@@ -599,6 +599,9 @@
                                                         <constraint firstAttribute="width" constant="86" id="bax-FB-RKU"/>
                                                         <constraint firstAttribute="height" constant="87" id="hky-cV-LyB"/>
                                                     </constraints>
+                                                    <connections>
+                                                        <outletCollection property="gestureRecognizers" destination="KXf-16-hx7" appends="YES" id="i1h-Eb-M6C"/>
+                                                    </connections>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="1002" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="头像" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y28-oN-cnO">
                                                     <rect key="frame" x="22" y="46" width="145" height="27"/>
@@ -610,6 +613,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <gestureRecognizers/>
                                             <constraints>
                                                 <constraint firstAttribute="trailingMargin" secondItem="Aez-Y2-k3r" secondAttribute="trailing" constant="5" id="2c8-G1-gKB"/>
                                                 <constraint firstItem="y28-oN-cnO" firstAttribute="top" secondItem="IZl-tb-ETJ" secondAttribute="topMargin" constant="38" id="C8n-A3-7KE"/>
@@ -726,7 +730,11 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S6L-SS-eHg" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="gEv-KT-5ku"/>
+                <tapGestureRecognizer id="KXf-16-hx7">
+                    <connections>
+                        <action selector="clickAction:" destination="xo5-vh-4Mx" id="WOr-WL-lBc"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1228" y="783"/>
         </scene>

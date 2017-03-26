@@ -13,6 +13,10 @@
 @property(nonatomic, strong)XMPPStream *xmppStream;
 // 通讯录模块
 @property(nonatomic, strong)XMPPRoster *xmppRoster;
+//电子名片
+@property(nonatomic, strong)XMPPvCardTempModule *xmppVCardTemp;
+//头像模块
+@property(nonatomic, strong)XMPPvCardAvatarModule *xmppVCardAvatar;
 
 +(instancetype)sharedManger;
 // 登陆的方法

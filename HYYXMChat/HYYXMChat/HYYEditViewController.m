@@ -28,8 +28,20 @@
 }
 
 - (IBAction)clickBackItem:(id)sender {
+    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 - (IBAction)clickSaveItem:(id)sender {
+    // 修改信息
+    
+  XMPPvCardTemp *myVCard = [HYYXMPPManger sharedManger].xmppVCardTemp.myvCardTemp;
+    if ([self.title isEqualToString:@"修改昵名"]) {
+        myVCard.nickname = self.textField.text;
+    }else{
+        myVCard.desc = self.textField.text;
+    }
+    [[HYYXMPPManger sharedManger].xmppVCardTemp updateMyvCardTemp:myVCard];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 

@@ -44,6 +44,7 @@
 //电子名片模块缓存
 #import "XMPPvCardTempModule.h"
 #import "XMPPvCardCoreDataStorage.h"
+#import "XMPPvCardTemp.h"
 
 
 

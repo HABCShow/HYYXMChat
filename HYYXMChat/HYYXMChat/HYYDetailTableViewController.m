@@ -9,7 +9,7 @@
 #import "HYYDetailTableViewController.h"
 #import "HYYEditViewController.h"
 
-@interface HYYDetailTableViewController ()
+@interface HYYDetailTableViewController ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *imgView;
 
@@ -24,12 +24,39 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
     
-    // Uncomment the following line to display an Edit button in the navigation bar for t his view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
+-(void)viewWillAppear:(BOOL)animated{
+    
+    [super viewWillAppear:animated];
+    XMPPvCardTemp* myVCard = [HYYXMPPManger sharedManger].xmppVCardTemp.myvCardTemp;
+    self.imgView.image = [UIImage imageWithData:myVCard.photo];
+    self.nameLabel.text = myVCard.nickname;
+    self.descLabel.text = myVCard.desc;
+    
+}
+
+- (IBAction)clickAction:(id)sender {
+    // 创建控制器
+    UIImagePickerController *piker = [[UIImagePickerController alloc]init];
+    piker.delegate = self;
+    piker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    // 运行裁切
+    piker.allowsEditing = YES;
+    [self presentViewController:piker animated:YES completion:nil];
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
+    
+   UIImage *img = info[UIImagePickerControllerEditedImage];
+   XMPPvCardTemp *myVCard = [HYYXMPPManger sharedManger].xmppVCardTemp.myvCardTemp;
+    myVCard.photo = UIImageJPEGRepresentation(img, 0.1);
+    // 更新
+    [[HYYXMPPManger sharedManger].xmppVCardTemp updateMyvCardTemp:myVCard];
+    // 销毁控制器
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     
     HYYEditViewController *vc = segue.destinationViewController;

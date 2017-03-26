@@ -29,10 +29,8 @@ static HYYXMPPManger *instance;
 @property(nonatomic, strong)NSFetchedResultsController *rosterFetchController;
 //文件归档模块
 @property(nonatomic, strong)XMPPMessageArchiving *xmppMessageArchiving;
-//电子名片
-@property(nonatomic, strong)XMPPvCardTempModule *xmppVCardTemp;
-//头像模块
-@property(nonatomic, strong)XMPPvCardAvatarModule *xmppVCardAvatar;
+
+
 
 @end
 
@@ -78,6 +76,11 @@ static HYYXMPPManger *instance;
      //是否只归档客户端的消息(即使设置为NO,也要求客户端完整实现0136协议才可以实现离线消息同步)
     self.xmppMessageArchiving.clientSideMessageArchivingOnly = YES;
     [self.xmppMessageArchiving activate:self.xmppStream];
+    
+    // 电子名片
+    [self.xmppVCardTemp activate:self.xmppStream];
+    // 头像
+    [self.xmppVCardAvatar activate:self.xmppStream];
 }
 
 // 日志
